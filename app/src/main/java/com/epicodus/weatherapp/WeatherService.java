@@ -1,11 +1,19 @@
 package com.epicodus.weatherapp;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Guest on 11/29/16.
@@ -13,9 +21,10 @@ import okhttp3.Request;
 public class WeatherService {
 
     public static void getForecast(String zip, Callback callback){
+
         OkHttpClient client = new OkHttpClient.Builder().build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.WEATHER_BASE_URL).newBuilder();
-        urlBuilder.addQueryParameter(Constants.WEATHER_ZIP_QUERY, zip);
+        urlBuilder.addQueryParameter(Constants.WEATHER_LOCATION_QUERY, zip);
         urlBuilder.addQueryParameter(Constants.WEATHER_API_QUERY_PARAMETER, Constants.WEATHER_KEY);
         String url = urlBuilder.build().toString();
 
@@ -27,4 +36,30 @@ public class WeatherService {
         call.enqueue(callback);
 
     }
+
+    public ArrayList<Weather> processResults(Response response) {
+        ArrayList<Weather> weathers =  new ArrayList<>();
+        try {
+            String jsonData = response.body().string();
+            if (response.isSuccessful()) {
+                JSONObject weatherJSON = new JSONObject(jsonData);
+                JSONArray listJSON = weatherJSON.getJSONArray("list");
+                for(int i = 0; i < listJSON.length(); i ++){
+                    JSONObject currentWeather = listJSON.getJSONObject(i);
+                    double max = currentWeather.getJSONObject("temp").getDouble("max");
+                    double min = currentWeather.getJSONObject("temp").getDouble("min");
+                    Weather dayWeather = new Weather(max,min);
+                    weathers.add(dayWeather);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return weathers;
+
+
+    }
 }
+//name, time day, prec
