@@ -1,6 +1,8 @@
 package com.epicodus.weatherapp;
 
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +50,8 @@ public class WeatherService {
                     JSONObject currentWeather = listJSON.getJSONObject(i);
                     int max = toFahrenheit(currentWeather.getJSONObject("temp").getDouble("max"));
                     int min = toFahrenheit(currentWeather.getJSONObject("temp").getDouble("min"));
+                    JSONArray weatherListJSON = currentWeather.getJSONArray("weather");
+                    String icon = weatherListJSON.getJSONObject(0).getString("icon");
                     Weather dayWeather = new Weather(max,min);
                     weathers.add(dayWeather);
                 }
