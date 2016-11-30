@@ -17,7 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WeatherActivity" >
+        <activity android:name=".WeatherActivity"
+            android:label="Back">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.epicodus.weatherapp.MainActivity"/>
         </activity>
     </application>
 

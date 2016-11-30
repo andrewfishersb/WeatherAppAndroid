@@ -52,7 +52,8 @@ public class WeatherService {
                     int min = toFahrenheit(currentWeather.getJSONObject("temp").getDouble("min"));
                     JSONArray weatherListJSON = currentWeather.getJSONArray("weather");
                     String icon = weatherListJSON.getJSONObject(0).getString("icon");
-                    Weather dayWeather = new Weather(max,min);
+                    long timeStamp = currentWeather.getInt("dt")*100000;
+                    Weather dayWeather = new Weather(max,min,icon,timeStamp);
                     weathers.add(dayWeather);
                 }
             }
@@ -62,8 +63,6 @@ public class WeatherService {
             e.printStackTrace();
         }
         return weathers;
-
-
     }
 
     public int toFahrenheit(double temp){

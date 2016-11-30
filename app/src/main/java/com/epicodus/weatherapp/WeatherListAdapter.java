@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,6 +47,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     public class WeatherViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.maxText) TextView mMaxText;
         @Bind(R.id.minText) TextView mMinText;
+        @Bind(R.id.weatherIcon) ImageView mWeatherIcon;
+        @Bind(R.id.dateText) TextView mDateText;
+
         private Context mContext;
 
         public WeatherViewHolder(View itemView) {
@@ -53,8 +59,10 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         }
 
         public void bindWeather(Weather weather) {
-            mMaxText.setText("Hight: " + weather.getmMax());
+            Picasso.with(mContext).load(weather.getIcon()).into(mWeatherIcon);
+            mMaxText.setText("High: " + weather.getmMax());
             mMinText.setText("Low: " + weather.getmMin());
+            mDateText.setText(weather.getTimeStamp());
 
         }
     }
