@@ -6,20 +6,21 @@ import java.util.ArrayList;
  * Created by Guest on 11/29/16.
  */
 public class Weather {
-    private double mMax;
-    private double mMin;
+    private int mMax;
+    private int mMin;
 
-    public Weather(double max, double min) {
+    public Weather(int max, int min) {
         this.mMax = max;
         this.mMin = min;
     }
 
-    public double getmMin() {
+    public int getmMin() {
 
         return mMin;
     }
 
-    public double getmMax() {
+
+    public int getmMax() {
 
         return mMax;
     }

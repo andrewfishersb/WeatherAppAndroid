@@ -2,6 +2,8 @@ package com.epicodus.weatherapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,7 +19,9 @@ import java.util.ArrayList;
 
 public class WeatherActivity extends AppCompatActivity {
     public static final String TAG = WeatherActivity.class.getSimpleName();
-    @Bind(R.id.forecastListView) ListView mListView;
+
+    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+    private WeatherListAdapter mAdapter;
 
     public ArrayList<Weather> mWeather = new ArrayList<>();
     @Override
@@ -38,27 +42,24 @@ public class WeatherActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response)  {
                 mWeather = weatherService.processResults(response);
 
                 WeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
-                        String[] forecast = new String[mWeather.size()];
-                        for (int i=0;i<forecast.length;i++){
-                            forecast[i] = "Max Temp: " + toFahrenheit(mWeather.get(i).getmMax()) + " Min Temp: "+ toFahrenheit(mWeather.get(i).getmMin());
-                        }
-                        ArrayAdapter adapter = new ArrayAdapter(WeatherActivity.this,android.R.layout.simple_list_item_1, forecast);
-                        mListView.setAdapter(adapter);
+                        mAdapter = new WeatherListAdapter(getApplicationContext(), mWeather);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager =
+                                new LinearLayoutManager(WeatherActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
                     }
                 });
             }
         });
     }
 
-    public int toFahrenheit(double temp){
-        double convert = temp * 1.8 +32;
-        return (int) convert;
-    }
+
 }

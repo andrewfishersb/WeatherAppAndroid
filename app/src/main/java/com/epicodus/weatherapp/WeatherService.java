@@ -46,8 +46,8 @@ public class WeatherService {
                 JSONArray listJSON = weatherJSON.getJSONArray("list");
                 for(int i = 0; i < listJSON.length(); i ++){
                     JSONObject currentWeather = listJSON.getJSONObject(i);
-                    double max = currentWeather.getJSONObject("temp").getDouble("max");
-                    double min = currentWeather.getJSONObject("temp").getDouble("min");
+                    int max = toFahrenheit(currentWeather.getJSONObject("temp").getDouble("max"));
+                    int min = toFahrenheit(currentWeather.getJSONObject("temp").getDouble("min"));
                     Weather dayWeather = new Weather(max,min);
                     weathers.add(dayWeather);
                 }
@@ -61,5 +61,9 @@ public class WeatherService {
 
 
     }
+
+    public int toFahrenheit(double temp){
+        double convert = temp * 1.8 +32;
+        return (int) convert;
+    }
 }
-//name, time day, prec
