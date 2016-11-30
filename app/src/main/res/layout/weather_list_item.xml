@@ -26,9 +26,6 @@
             android:layout_height="wrap_content"
             android:text="Min"
             android:id="@+id/minText"
-            android:layout_below="@+id/restaurantNameTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:textStyle="italic"/>
 
         <RelativeLayout
