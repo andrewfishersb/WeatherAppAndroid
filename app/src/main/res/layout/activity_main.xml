@@ -12,8 +12,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Zip Code"
+        android:text="Submit"
         android:id="@+id/zipButton"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editCityText"
+        android:layout_above="@+id/zipButton"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter City"/>
 </RelativeLayout>
